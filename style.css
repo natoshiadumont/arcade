@@ -1,1 +1,55 @@
+@font-face {
+  font-family: 'arcade-major';
+  src: url(fonts/ka1.ttf);
+}
 
+@font-face {
+  font-family: 'arcade-minor';
+  src: url(fonts/ArcadeAlternate.ttf);
+}
+
+body{
+  cursor:default;
+  margin:0;
+}
+
+main{
+  height: 100vh;
+  background-image: url("images/arcade-background.jpg");
+  background-size: cover;
+}
+
+header{
+  background-color: aqua;
+  font-family: 'arcade-major';
+  font-size: 55px;
+  text-align: center;
+  padding: 20px;
+  position:fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+footer{
+  position:fixed;
+  bottom:0;
+  left: 0;
+  right:0;
+  padding: 5px;
+  background-color: aqua;
+  font-family: 'arcade-minor';
+}
+#gamecontainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+#game-screen{
+  background-color:aqua;
+  height:500px;
+  width:1000px;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
