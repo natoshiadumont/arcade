@@ -5,30 +5,34 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Arcade Game</title>
 </head>
+
 <body>
+  
   <header><div id="game-title">The Very Famished Worm</div></header>
 
   <main>
-
     <div id="game-container">
-      <div id="game-screen"></div>
-      <div id="game-options">
-      <div id="restart-game">Restart Game</div>
+      <div id="difficulty-container"><label for="difficulty"> Choose a difficulty level: </label>
+        <select name="difficulty" id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="classic" selected>Classic</option>
+        <option value="hard">Hard</option>
+        </select></div>
+        <div id="game-screen"></div>
+        <div id="game-options">
+        <div id="restart-game">Restart Game</div>
+     </div>
     </div>
-
-
-    </div>
-
   </main>
-
 
   <footer>
     <div id="project-by">Project By: Natoshia Dumont</div>
     <a id="background-credit" href="https://www.freepik.com/free-vector/blue-grid-neon-patterned-background-vector_18706297.htm#query=arcade%20background&position=3&from_view=search&track=sph">Background Image by rawpixel.com</a> on Freepik
+    <a href="https://www.freepik.com/free-vector/brown-soil-texture-background_3478044.htm#query=dirt%20illustartation%20background&position=0&from_view=search&track=ais">Game Background Image by brgfx</a> on Freepik
     <script src="app.js"></script>
   </footer>
+
 </body>
 </html>
