@@ -20,28 +20,7 @@ let state;
 
 //setting initial state of game before pressing 'play'
 function buildInitialState() {
-   let table = document.getElementsByTagName('table')[0];
-   let rowCount=1;
-   boardCounter =1;
-   //create buildBoard function to add rows with, each td with unique row/column id
-   function buildBoard(){
-      let columnCount=1;
-      const newRow = document.createElement('tr');
-      for (let i = 0; i < 20; i++) {
-         const td = document.createElement('td');
-         td.setAttribute('id', `row: ${rowCount} column: ${columnCount} `);
-         columnCount++;
-         newRow.appendChild(td);
-         // tr.setAttribute('class', `row: {rowCount}`);
-      }
-      table.appendChild(newRow);
-      rowCount++;
-   }
-   while(boardCounter < 18){
-      buildBoard();
-      boardCounter++;
-   }
-
+ 
 
 }
 buildInitialState();
