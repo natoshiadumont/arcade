@@ -1,10 +1,3 @@
-/*
-Create following variables
-gameGrid -> grid element
-restartButton -> retart-game element
-worm -> default placement and color of worm
-wormColor -> palevioletred
-*/
 
 let gameScreen = document.getElementById('game-grid');
 let restartButton = document.getElementById('restart-game');
@@ -20,7 +13,7 @@ let state;
 
 //setting initial state of game before pressing 'play'
 function buildInitialState() {
-   let table = document.getElementsByTagName('table')[0];
+   let table = document.getElementsByTagName('canvas')[0];
    let rowCount=1;
    boardCounter =1;
    //create buildBoard function to add rows with, each td with unique row/column id
@@ -66,11 +59,12 @@ const fruits = ['apple', 'banana', 'blackberry', 'orange', 'pear'] ;
 function randomFruit(){
    return Math.floor(Math.random(100) * fruits.length)
 }
-let fruit = `images/fruit-icons/${fruits[randomFruit()]}.png`;
+let fruit = document.createElement('img')
+fruit.src = `images/fruit-icons/${fruits[randomFruit()]}.png`;
 while(fruitCounter <= 3){
    //use arrow function to add attribute randomFruit into randomRow RandomColum
    ()=>{
-     document.getElementById(`row: ${randomRow} column: ${randomColumn} `).setAttribute(`${fruit.src}`);
+     document.getElementById(`row: ${randomRow} column: ${randomColumn} `).append(`${fruit.src}`);
    }
    fruitCounter++;
 } 
@@ -102,5 +96,3 @@ function tick() {
  document.addEventListener('keydown', function (event) {
    // here you might read which key was pressed and update the state accordingly
  })
-
-
