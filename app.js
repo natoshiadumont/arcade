@@ -5,56 +5,77 @@ restartButton -> retart-game element
 worm -> default placement and color of worm
 wormColor -> palevioletred
 */
-
-let gameScreen = document.getElementById('game-grid');
+let gameGrid = document.getElementById('game-grid');
 let restartButton = document.getElementById('restart-game');
-let worm = {
-   body: [ [10, 5], [10, 6], [10, 7], [10, 8] ],
-   nextDirection: [1, 0]
-}
-let wormColor = 'palevioletred';
+let worm = [
+   {x:10, y:11},
+   {x:11, y:11},
+   {x:12, y:11}
+]
+const wormSpeed = 1;
+let score = 0;
 
 // state
 let state;
 
+//HELPER FUNCTIONS
+
+//function shoudl update worm with each render
+function moveWorm(){
+   gameGrid.innerHTML = ''
+   //console.log('updateWorm') -> this puppy is WORKING
+   //use for loop to iterate over worm from second to last element, since last element will disapear when moving
+   for(let i = worm.lenth -2; i >= 0; i--){
+      worm[i +1] = {...worm[i]}
+
+   }
+   worm[0].x += 1;
+   worm[0].y += 0;
+
+}
+//create function to set second snack unit to a darker pink
+
+//function should represrent what the worm looks like when rendered in html
+function renderWorm(wormGrid){
+   //console.log('makeWorm'); // -> this puppy is WORKING
+   worm.forEach(singleSquare =>{
+      const wormElement = document.createElement('div');
+      wormElement.style.gridRowStart = singleSquare.y;
+      wormElement.style.gridColumnStart = singleSquare.x;
+      wormElement.classList.add('worm');
+      wormGrid.appendChild(wormElement);
+   })
+  
+}
+
+
+
 
 //setting initial state of game before pressing 'play'
 function buildInitialState() {
- 
 
 }
 buildInitialState();
 
 
-
+//create a variable that captures the last time the screen image was rendered
+let lastRender = 0;
 // render
-function renderState() {
-
-}
-
-// maybe a dozen or so helper functions for tiny pieces of the interface
-
-let fruitCounter = 1;
-
-//make randomRow and Random Column variables
-const randomRow = Math.floor(Math.random(100) * 17);
-const randomColumn = Math.floor(Math.random(100) * 20);
-//create placeFruit function to randomly place fruit on grid
-function placeFruit(){
-const fruits = ['apple', 'banana', 'blackberry', 'orange', 'pear'] ; 
-function randomFruit(){
-   return Math.floor(Math.random(100) * fruits.length)
-}
-let fruit = `images/fruit-icons/${fruits[randomFruit()]}.png`;
-while(fruitCounter <= 3){
-   //use arrow function to add attribute randomFruit into randomRow RandomColum
-   ()=>{
-     document.getElementById(`row: ${randomRow} column: ${randomColumn} `).setAttribute(`${fruit.src}`);
+function renderState(currentTime) {
+   window.requestAnimationFrame(renderState)
+   const lastRenderTime = (currentTime - lastRender)  / 1000;
+   if(lastRenderTime < 1 / wormSpeed){
+      return;
    }
-   fruitCounter++;
-} 
+   console.log('rendering');
+   lastRender = currentTime;
+   moveWorm();
+   renderWorm(gameGrid);
 }
-placeFruit();
+window.requestAnimationFrame(renderState);
+
+
+
 // listeners
 restartButton.addEventListener('click', ()=>{
    document.location.reload();
@@ -64,8 +85,7 @@ function onBoardClick() {
 
   renderState() // show the user the new state
 }
-gameScreen.addEventListener('keydown', changeDirection)
-const board = document.getElementById('board');
+
 board.addEventListener('click', onBoardClick); // etc
 
 // add to above

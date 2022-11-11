@@ -42,10 +42,11 @@ footer{
   left: 0;
   right:0;
   padding: 10px;
-  background-color: #9FBC61;
+  background-color: antiquewhite;
   font-family: 'arcade-minor';
   text-decoration: none;
   color:black;
+  box-shadow: 0 -3px 10px 3px rgba(0, 0, 0, 0.2);
 }
 
 #game-container{
@@ -74,19 +75,20 @@ footer{
   height:60vmin;
   width: 60vmin;
   display:grid;
-  grid-template-rows: repeat(20, 1fr);
-  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(21, 1fr);
+  grid-template-columns: repeat(21, 1fr);
 }
 
 .worm{
   background-color: palevioletred;
-  border:1px solid black;
+  border:1px solid;
+  border-radius: 8px;
+
 }
 
 .fruit{
-  size: 100%;
-  background-image: url(images/fruit-icons/strawberry.png);
-  border:1px solid black;
+background-image: url(images/fruit-icons/strawberry.png);
+background-size:100%;
 }
 
 #difficulty-container{
@@ -95,24 +97,26 @@ footer{
   justify-content: center;
   align-items: center;
   font-family: 'arcade-minor';
-  font-size:large;
-  margin-bottom: 10px;
+  font-size:2.2vmin;
+  margin-bottom: 1vh;
   background-color: #F6BB53;
-  padding:5px;
+  padding:10px;
   border: 3px solid black;
   border-radius: 5px;
-  padding-top: 8px;
+  height: auto;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 #game-options{
   display:flex;
   flex-direction: row;
   justify-content: center;
+  
 }
 
 #score{
   font-family: 'arcade-minor';
-  font-size: large;
+  font-size: auto;
   margin-left:20px;
 }
 
@@ -120,15 +124,15 @@ footer{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30px;
-  font-size: 20px;
+  height: 2vmin;
+  font-size: 2.5vmin;
   background-color: rgba(250, 235, 215, 0.395);
-  padding: 10px;
+  padding: 20px;
   border-radius: 20px;
-  color:rgba(0, 0, 0, 0.609);
+  color:rgba(0, 0, 0, 0.376);
   border: 3px solid rgba(0, 0, 0, 0.238);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;  font-family: 'arcade-minor';
-  margin-top:5%;
+  margin-top:1vh;
   cursor:pointer;
 }
 
@@ -145,12 +149,11 @@ select{
 
 }
 
-
 @media (hover:hover){
   #restart-game:hover{
     background-color:#F6BB53;
     border: 3px solid black;
     color:black;
   }
-  
+
 }
