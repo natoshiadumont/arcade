@@ -75,14 +75,23 @@ footer{
   height:60vmin;
   width: 60vmin;
   display:grid;
-  grid-template-rows: repeat(21, 1fr);
-  grid-template-columns: repeat(21, 1fr);
+  grid-template-rows: repeat(22, 1fr);
+  grid-template-columns: repeat(22, 1fr);
+  align-items: center;
 }
 
 .worm{
   background-color: palevioletred;
   border:1px solid;
-  border-radius: 8px;
+  border-radius: 6px;
+  height: 80%;
+  
+}
+.alternateWormClass{
+  background-color: rgb(168, 69, 89);
+  border:1px solid;
+  border-radius: 3px;
+  height: 90%
 
 }
 
