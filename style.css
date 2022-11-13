@@ -60,7 +60,7 @@ footer{
 }
 
 #game-screen {
-  background-color: rgb(31, 151, 31);
+  background-color: #9FBC61;
   background-image: url(images/game-screen-background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
