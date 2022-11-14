@@ -5,9 +5,11 @@ restartButton -> retart-game element
 worm -> default placement and color of worm
 wormColor -> palevioletred
 */
+let gameOver = false;
 let gameGrid = document.getElementById('game-grid');
 let restartButton = document.getElementById('restart-game');
-
+let play = document.getElementById('playButton');
+let gameOverMessage = document.getElementById('gameOverMessage');
 //create dynamic score keeper that populates inside of score id innerHTML
 //declare variable score to equal current amount of fruit eatent
 let currentScore = 0;
@@ -49,12 +51,14 @@ function buildInitialState() {
    //reset worm to {x:11, y:11}
    //reset current score to zero
    //move fruit into new random grid spot
+
    fruit = { x: 11, y: 5, id: randomFruitImg() };
    moveState = { x: 0, y: 0 };
    lastMoveState = { x: 0, y: 0 };
    worm = [
       { x: 11, y: 11 },
    ]
+   gameOverMessage.innerText = '';
    currentScore = 0;
    scoreText.innerHTML = `Score: ${currentScore}`;
    randomFruitImg();
@@ -67,11 +71,23 @@ restartButton.addEventListener('click', () => {
    moveFruit();
 })
 
-
 //create a variable that captures the last time the screen image was rendered
 let lastRender = 0;
 // render
+
 function renderState(currentTime) {
+   if (gameOver) {
+      gameOverMessage.innerText = `
+   Sorry... Game Over.
+
+   At least the worm was able to eat 
+   ${currentScore} times, I guess?
+
+   #wormsarepeopletoo
+   #dobetter
+   #PressRestartGame`;
+      return;
+   }
    window.requestAnimationFrame(renderState)
    const lastRenderTime = (currentTime - lastRender) / 1000;
    if (lastRenderTime < 1 / wormSpeed) {
@@ -79,13 +95,12 @@ function renderState(currentTime) {
    }
    //console.log('rendering');
    lastRender = currentTime;
-
    moveWorm();
    drawWorm();
    moveFruit();
    renderFruit(gameGrid);
    toggleSpeed();
-
+   isAlive();
 }
 window.requestAnimationFrame(renderState);
 
@@ -167,7 +182,7 @@ function renderWorm(wormGrid) {
       const wormElement = document.createElement('div');
       wormElement.style.gridRowStart = square.y;
       wormElement.style.gridColumnStart = square.x;
-      //styling worm segments to add a little EXTRAH!!! HAHAHA 
+      //styling worm segments to add a little EXTRAH!!! HAHAHA
       if (square === worm[2] || square === worm[3] || square === worm[4]) {
          wormElement.classList.add('alternateWormClass');
       }
@@ -189,17 +204,23 @@ function addSegment(num) {
    newSegments += num;
    //use for loop to iterate over worm segments
    for (let i = 0; i < newSegments; i++) {
-      worm.push({ ...worm[worm.length - 1] })
-   }
+      worm[worm.length] = worm.length - 1;
    newSegments = 0;
+   }
 }
 
-function wormAte(location) {
-   return worm.some(segment => {
+function wormAte(location, ignoreHead) {
+   console.log("DEBUG:  ignoreHead is ", ignoreHead, worm);
+   let res = worm.some((segment, index) => {
+      if (ignoreHead && index === 0) {
+         return false;
+      }
       return sameLocation(segment, location)
+
    })
+   console.log("DEBUG:  res:", res)
+   return res;
 }
-// wormAte(); // why is this being called on its own? 
 
 function sameLocation(location1, location2) {
    if (location1 &&
@@ -223,13 +244,14 @@ function sameLocation(location1, location2) {
 
 function moveFruit() {
 
-   if (wormAte(fruit)) {
+   if (wormAte(fruit, false)) {
+      console.log("DEBUG: inside wormAte: fruit hit");
       fruitElement.removeAttribute('id');
       currentScore++;
       addSegment(wormGrowth);
       randomFruitImg();
       fruit = { x: randomXY(), y: randomXY(), id: randomFruitImg() };
-      while (wormAte(fruit)) {
+      while (wormAte(fruit, false)) {
          fruit = { x: randomXY(), y: randomXY(), id: randomFruitImg() };
       }
       scoreText.innerHTML = `Score: ${currentScore}`;
@@ -259,18 +281,17 @@ function randomFruitImg() {
 }
 //console.log(fruits[randomIdx(fruits)]);
 
-
 //TOGGLE DIFFICULTY
 //GET SELECTOR ELEMENT
 let difficulty = document.getElementById('difficulty');
-function toggleSpeed(){
-   if(difficulty.value === 'easy'){
+function toggleSpeed() {
+   if (difficulty.value === 'easy') {
       wormSpeed = 5;
    }
-   if(difficulty.value === 'classic'){
+   if (difficulty.value === 'classic') {
       wormSpeed = 10;
    }
-   if(difficulty.value === 'hard'){
+   if (difficulty.value === 'hard') {
       wormSpeed = 20;
    }
    return wormSpeed;
@@ -279,11 +300,30 @@ function toggleSpeed(){
 
 
 ////PLAY BUTTON FUNCTIONALITY///////
-let play = document.getElementById('playButton');
+
 //make event listener that remove play button on click and playButtonScreen
 //should also trigger initial state
 
-play.addEventListener('click', ()=>{
+// play.addEventListener('click', ()=>{
 
-   buildInitialState();
-})
+//    buildInitialState();
+// })
+
+
+//////END GAME FUNCTIONALITY///////////
+const gridSize = 21;
+function getFirstSegment() {
+   return worm[0];
+}
+function wormIntersection() {
+   return wormAte(getFirstSegment(), true);
+}
+function notInGrid(location) {
+   return (
+      location.x < 1 || location.x > gridSize ||
+      location.y < 1 || location.y > gridSize);
+}
+function isAlive() {
+   gameOver = notInGrid(getFirstSegment()) || wormIntersection();
+   console.log('working');
+}
