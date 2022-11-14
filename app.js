@@ -24,7 +24,7 @@ let worm = [
    { x: 11, y: 11 }
 ]
 
-let wormSpeed = 20;
+let wormSpeed = 10;
 const wormGrowth = 1;
 
 let fruits = ['apple', 'banana', 'strawberry', 'pear', 'blackberry', 'orange'];
@@ -58,6 +58,7 @@ function buildInitialState() {
    currentScore = 0;
    scoreText.innerHTML = `Score: ${currentScore}`;
    randomFruitImg();
+   toggleSpeed();
 }
 
 // restart listener that bring game back to initial state
@@ -83,6 +84,7 @@ function renderState(currentTime) {
    drawWorm();
    moveFruit();
    renderFruit(gameGrid);
+   toggleSpeed();
 
 }
 window.requestAnimationFrame(renderState);
@@ -186,8 +188,8 @@ let newSegments = 0;
 function addSegment(num) {
    newSegments += num;
    //use for loop to iterate over worm segments
-   for (let i = 0; i < newSegments; i++){
-      worm.push({ ...worm[worm.length - 1]})
+   for (let i = 0; i < newSegments; i++) {
+      worm.push({ ...worm[worm.length - 1] })
    }
    newSegments = 0;
 }
@@ -206,7 +208,7 @@ function sameLocation(location1, location2) {
       location2 &&
       location2.x &&
       location2.y) {
-//test if worm segment is in the same place as a worm
+      //test if worm segment is in the same place as a worm
       return (location1.x === location2.x && location1.y === location2.y);
    }
    else {
@@ -226,9 +228,9 @@ function moveFruit() {
       currentScore++;
       addSegment(wormGrowth);
       randomFruitImg();
-      fruit = { x: randomXY(), y: randomXY(), id:randomFruitImg()};
-      while(wormAte(fruit)){
-      fruit = { x: randomXY(), y: randomXY(), id:randomFruitImg()};
+      fruit = { x: randomXY(), y: randomXY(), id: randomFruitImg() };
+      while (wormAte(fruit)) {
+         fruit = { x: randomXY(), y: randomXY(), id: randomFruitImg() };
       }
       scoreText.innerHTML = `Score: ${currentScore}`;
 
@@ -245,14 +247,43 @@ function renderFruit(gameGrid) {
    fruitElement.style.gridRowStart = fruit.y;
    fruitElement.style.gridColumnStart = fruit.x;
 
-   if(!fruitElement.hasAttribute('class')){
+   if (!fruitElement.hasAttribute('class')) {
       fruitElement.classList.add(`fruit`);
       fruitElement.setAttribute('id', fruit.id);
    }
- // fruitElement.classList.add(`${fruits[randomIdx(fruits)]}`);
+   // fruitElement.classList.add(`${fruits[randomIdx(fruits)]}`);
    gameGrid.appendChild(fruitElement);
 }
-function randomFruitImg(){
+function randomFruitImg() {
    return fruits[randomIdx(fruits)];
 }
 //console.log(fruits[randomIdx(fruits)]);
+
+
+//TOGGLE DIFFICULTY
+//GET SELECTOR ELEMENT
+let difficulty = document.getElementById('difficulty');
+function toggleSpeed(){
+   if(difficulty.value === 'easy'){
+      wormSpeed = 5;
+   }
+   if(difficulty.value === 'classic'){
+      wormSpeed = 10;
+   }
+   if(difficulty.value === 'hard'){
+      wormSpeed = 20;
+   }
+   return wormSpeed;
+}
+
+
+
+////PLAY BUTTON FUNCTIONALITY///////
+let play = document.getElementById('playButton');
+//make event listener that remove play button on click and playButtonScreen
+//should also trigger initial state
+
+play.addEventListener('click', ()=>{
+
+   buildInitialState();
+})

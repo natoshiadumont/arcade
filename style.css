@@ -20,6 +20,17 @@ main {
   background-size: 100%;
 }
 
+/* #startButtonScreen{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#playButton{
+  height: 20vmin;
+} */
+
 header {
   background-color: #9FBC61;
   font-family: 'arcade-major';
