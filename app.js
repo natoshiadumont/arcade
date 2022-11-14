@@ -24,7 +24,7 @@ let worm = [
    { x: 11, y: 11 }
 ]
 
-let wormSpeed = 5;
+let wormSpeed = 20;
 const wormGrowth = 1;
 
 let fruits = ['apple', 'banana', 'strawberry', 'pear', 'blackberry', 'orange'];
@@ -227,8 +227,10 @@ function moveFruit() {
       addSegment(wormGrowth);
       randomFruitImg();
       fruit = { x: randomXY(), y: randomXY(), id:randomFruitImg()};
+      while(wormAte(fruit)){
+      fruit = { x: randomXY(), y: randomXY(), id:randomFruitImg()};
+      }
       scoreText.innerHTML = `Score: ${currentScore}`;
-      
 
    }
    // console.log(fruit);
@@ -254,11 +256,3 @@ function randomFruitImg(){
    return fruits[randomIdx(fruits)];
 }
 //console.log(fruits[randomIdx(fruits)]);
-
-
-
-
-
-
-
-
