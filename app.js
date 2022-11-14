@@ -58,36 +58,91 @@ function buildInitialState() {
    worm = [
       { x: 11, y: 11 },
    ]
-   gameOverMessage.innerText = '';
    currentScore = 0;
    scoreText.innerHTML = `Score: ${currentScore}`;
    randomFruitImg();
    toggleSpeed();
+   gameOver = false;
+   restartButton.innerText = 'Restart Game';
 }
 
 // restart listener that bring game back to initial state
-restartButton.addEventListener('click', () => {
-   buildInitialState();
-   moveFruit();
-})
+
 
 //create a variable that captures the last time the screen image was rendered
 let lastRender = 0;
 // render
+function lessThan10(){
+   if(currentScore === 0){
+      return `The worm wasn't able to eat at all.
+      Not cool, dude...`;
+
+   }
+   else if(currentScore === 1){
+      return `The worm ate once.
+       She's not impressed.`;
+
+   }
+   else{
+      return `The worm was able to eat ${currentScore} times.
+      She's not impressed.`;
+   }
+}
 
 function renderState(currentTime) {
    if (gameOver) {
-      gameOverMessage.innerText = `
-   Sorry... Game Over.
+      if(currentScore < 10){
+         gameOverMessage.innerText = `
+         GAME OVER!!!
+         ${lessThan10()}
 
-   At least the worm was able to eat 
-   ${currentScore} times, I guess?
-
-   #wormsarepeopletoo
-   #dobetter
-   #PressRestartGame`;
+         #starving
+         #yourebetterthanthis
+         #PressRestartGame`;
+         return;
+      }
+      else if(currentScore < 20){
+         gameOverMessage.innerText = `
+   
+         Sorry... Game Over.
+      
+         The worm was able to eat 
+         ${currentScore} times.
+         Not bad! 
+         Practice makes perfect!
+      
+         #yougotthis
+         #PressRestartGame`;
+         return
+      }
+      else if(currentScore < 30){
+         gameOverMessage.innerText = `
+   
+         Acheivment Unlocked:
+      
+         The worm is full after eating 
+         ${currentScore} times!
+         Looks like you don't need practice!
+      
+         #GreatJob
+         #AchievmentUnlocked`;
+         return;
+      }
+         gameOverMessage.innerText = `
+   
+         CONGRATULATIONS! YOU WIN!
+      
+         The worm is totally stuffed after eating 
+         ${currentScore} times!
+         You play like a PRO!
+      
+         #YOUROCK
+         #EXPERTLAYER`;
+         
       return;
    }
+
+      
    window.requestAnimationFrame(renderState)
    const lastRenderTime = (currentTime - lastRender) / 1000;
    if (lastRenderTime < 1 / wormSpeed) {
@@ -102,8 +157,6 @@ function renderState(currentTime) {
    toggleSpeed();
    isAlive();
 }
-window.requestAnimationFrame(renderState);
-
 
 
 //WORM RENDER/MOVEMENT FUNCTIONS//////////////////////////////////////
@@ -286,13 +339,13 @@ function randomFruitImg() {
 let difficulty = document.getElementById('difficulty');
 function toggleSpeed() {
    if (difficulty.value === 'easy') {
-      wormSpeed = 5;
+      wormSpeed = 2;
    }
    if (difficulty.value === 'classic') {
-      wormSpeed = 10;
+      wormSpeed = 5;
    }
    if (difficulty.value === 'hard') {
-      wormSpeed = 20;
+      wormSpeed = 12;
    }
    return wormSpeed;
 }
@@ -301,14 +354,16 @@ function toggleSpeed() {
 
 ////PLAY BUTTON FUNCTIONALITY///////
 
-//make event listener that remove play button on click and playButtonScreen
-//should also trigger initial state
+// make event listener that remove play button on click and playButtonScreen
+// should also trigger initial state
 
-// play.addEventListener('click', ()=>{
-
-//    buildInitialState();
-// })
-
+restartButton.addEventListener('click', ()=>{
+   window.requestAnimationFrame(renderState);
+   gameOverMessage.innerHTML = '';
+   restartButton.innerText = 'Restart Game'
+   buildInitialState();
+   moveFruit();
+})
 
 //////END GAME FUNCTIONALITY///////////
 const gridSize = 21;
