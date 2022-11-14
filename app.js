@@ -106,10 +106,9 @@ function renderState(currentTime) {
    
          Sorry... Game Over.
       
-         The worm was able to eat 
-         ${currentScore} times.
+         The worm was able to eat ${currentScore} times.
          Not bad! 
-         Practice makes perfect!
+         Practice makes perfect.
       
          #yougotthis
          #PressRestartGame`;
